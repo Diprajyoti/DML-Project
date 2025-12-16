@@ -9,8 +9,8 @@ class BreastCancerPredictor:
         """Load model and scaler"""
         self.model = joblib.load(model_path)
         self.scaler = joblib.load(scaler_path)
-        print(f"✅ Model loaded from {model_path}")
-        print(f"✅ Scaler loaded from {scaler_path}")
+        print(f" Model loaded from {model_path}")
+        print(f" Scaler loaded from {scaler_path}")
     
     def predict(self, features):
         """
@@ -87,6 +87,6 @@ if __name__ == "__main__":
     
     # Test prediction
     result = predictor.predict(example_features)
-    print(f"\n🔮 Prediction Result:")
+    print(f"\n Prediction Result:")
     print(f"   Class: {result['prediction_label']}")
     print(f"   Confidence: {result['confidence']*100:.2f}%")

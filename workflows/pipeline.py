@@ -1,6 +1,6 @@
 """
 Simple ML Pipeline Orchestration
-Runs all steps in sequence: download → preprocess → train
+Runs all steps in sequence: download → validate → preprocess → train
 """
 
 import subprocess
@@ -10,7 +10,7 @@ import time
 def run_step(step_name, script_path):
     """Run a pipeline step and handle errors"""
     print(f"\n{'='*60}")
-    print(f"▶️  STEP: {step_name}")
+    print(f"  STEP: {step_name}")
     print(f"{'='*60}")
     
     start_time = time.time()
@@ -24,12 +24,12 @@ def run_step(step_name, script_path):
     elapsed = time.time() - start_time
     
     if result.returncode != 0:
-        print(f"❌ {step_name} FAILED!")
+        print(f" {step_name} FAILED!")
         print(f"Error: {result.stderr}")
         return False
     
     print(result.stdout)
-    print(f"✅ {step_name} completed in {elapsed:.2f}s")
+    print(f" {step_name} completed in {elapsed:.2f}s")
     
     return True
 
@@ -37,39 +37,46 @@ def main():
     """Main pipeline orchestration"""
     
     print("\n" + "="*60)
-    print("🚀 ML PIPELINE ORCHESTRATION")
+    print(" ML PIPELINE ORCHESTRATION")
     print("="*60)
     print("\nPipeline Steps:")
     print("  1. Download Data")
-    print("  2. Preprocess Data")
-    print("  3. Train Models with MLflow")
+    print("  2. Validate Data")
+    print("  3. Preprocess Data")
+    print("  4. Train Models with MLflow")
     print("="*60)
     
     pipeline_start = time.time()
     
     # Step 1: Download
     if not run_step("Download Data", "src/download_data.py"):
-        print("\n❌ Pipeline failed at Download step")
+        print("\n Pipeline failed at Download step")
         return False
     
-    # Step 2: Preprocess
+    # Step 2: Validate Data
+    if not run_step("Validate Data", "src/validate_data.py"):
+        print("\n Pipeline failed at Data Validation step")
+        return False
+
+    
+    # Step 3: Preprocess
     if not run_step("Preprocess Data", "src/preprocess.py"):
-        print("\n❌ Pipeline failed at Preprocessing step")
+        print("\n Pipeline failed at Preprocessing step")
         return False
     
-    # Step 3: Train
+    # Step 4: Train
     if not run_step("Train Models", "src/train.py"):
-        print("\n❌ Pipeline failed at Training step")
+        print("\n Pipeline failed at Training step")
         return False
     
     # Success!
     total_time = time.time() - pipeline_start
     
     print("\n" + "="*60)
-    print("✅ PIPELINE COMPLETED SUCCESSFULLY!")
+    print("  PIPELINE COMPLETED SUCCESSFULLY!")
     print("="*60)
-    print(f"\n⏱️  Total execution time: {total_time:.2f}s")
-    print("\n📊 Next steps:")
+    print(f"\n  Total execution time: {total_time:.2f}s")
+    print("\n Next steps:")
     print("   • View MLflow experiments: http://localhost:5000")
     print("   • Check best model: models/best_model.pkl")
     print("   • Review processed data: data/processed/")

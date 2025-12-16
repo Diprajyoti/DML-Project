@@ -28,3 +28,7 @@ anaconda_projects/
 !*.dvc
 !/data/**/.gitignore
 
+#venv/
+venv/
+.venv/
+

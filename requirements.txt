@@ -12,5 +12,6 @@ python-multipart
 pydantic
 matplotlib
 seaborn
-
+shap
+xgboost
 

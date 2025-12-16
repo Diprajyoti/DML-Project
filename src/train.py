@@ -39,7 +39,7 @@ def train_logistic_regression(X_train, X_test, y_train, y_test):
     # Start MLflow run
     with mlflow.start_run(run_name="Logistic_Regression"):
         
-        print("\n🔵 Training Logistic Regression...")
+        print("\n  Training Logistic Regression...")
         
         # Define model
         model = LogisticRegression(max_iter=1000, random_state=42)
@@ -63,7 +63,7 @@ def train_logistic_regression(X_train, X_test, y_train, y_test):
         mlflow.sklearn.log_model(model, "model")
         
         # Print results
-        print(f"✅ Accuracy: {metrics['accuracy']:.4f}")
+        print(f"   Accuracy: {metrics['accuracy']:.4f}")
         print(f"   Precision: {metrics['precision']:.4f}")
         print(f"   Recall: {metrics['recall']:.4f}")
         print(f"   F1-Score: {metrics['f1_score']:.4f}")
@@ -76,7 +76,7 @@ def train_random_forest(X_train, X_test, y_train, y_test):
     
     with mlflow.start_run(run_name="Random_Forest"):
         
-        print("\n🟢 Training Random Forest...")
+        print("\n  Training Random Forest...")
         
         # Define model
         model = RandomForestClassifier(
@@ -106,7 +106,7 @@ def train_random_forest(X_train, X_test, y_train, y_test):
         mlflow.sklearn.log_model(model, "model")
         
         # Print results
-        print(f"✅ Accuracy: {metrics['accuracy']:.4f}")
+        print(f"   Accuracy: {metrics['accuracy']:.4f}")
         print(f"   Precision: {metrics['precision']:.4f}")
         print(f"   Recall: {metrics['recall']:.4f}")
         print(f"   F1-Score: {metrics['f1_score']:.4f}")
@@ -119,7 +119,7 @@ def train_xgboost(X_train, X_test, y_train, y_test):
     
     with mlflow.start_run(run_name="XGBoost"):
         
-        print("\n🟡 Training XGBoost...")
+        print("\n Training XGBoost...")
         
         # Define model
         model = XGBClassifier(
@@ -151,7 +151,7 @@ def train_xgboost(X_train, X_test, y_train, y_test):
         mlflow.sklearn.log_model(model, "model")
         
         # Print results
-        print(f"✅ Accuracy: {metrics['accuracy']:.4f}")
+        print(f" Accuracy: {metrics['accuracy']:.4f}")
         print(f"   Precision: {metrics['precision']:.4f}")
         print(f"   Recall: {metrics['recall']:.4f}")
         print(f"   F1-Score: {metrics['f1_score']:.4f}")
@@ -167,7 +167,7 @@ def save_best_model(models_results):
     best_model = models_results[best_model_name]['model']
     best_metrics = models_results[best_model_name]['metrics']
     
-    print(f"\n🏆 BEST MODEL: {best_model_name}")
+    print(f"\n BEST MODEL: {best_model_name}")
     print(f"   Accuracy: {best_metrics['accuracy']:.4f}")
     
     # Save best model
@@ -183,7 +183,7 @@ def save_best_model(models_results):
         f.write(f"F1-Score: {best_metrics['f1_score']:.4f}\n")
         f.write(f"ROC-AUC: {best_metrics['roc_auc']:.4f}\n")
     
-    print(f"✅ Best model saved to models/best_model.pkl")
+    print(f" Best model saved to models/best_model.pkl")
     
     return best_model_name, best_metrics
 
@@ -191,16 +191,16 @@ def main():
     """Main training pipeline"""
     
     print("="*60)
-    print("🚀 STARTING MODEL TRAINING PIPELINE")
+    print(" STARTING MODEL TRAINING PIPELINE")
     print("="*60)
     
     # Set MLflow experiment
     mlflow.set_experiment("breast_cancer_classification")
     
     # Load data
-    print("\n📊 Loading data...")
+    print("\n Loading data...")
     X_train, X_test, y_train, y_test = load_data()
-    print(f"✅ Train: {X_train.shape}, Test: {X_test.shape}")
+    print(f" Train: {X_train.shape}, Test: {X_test.shape}")
     
     # Train all models
     models_results = {}
@@ -221,9 +221,9 @@ def main():
     best_model_name, best_metrics = save_best_model(models_results)
     
     print("\n" + "="*60)
-    print("✅ TRAINING COMPLETE!")
+    print(" TRAINING COMPLETE!")
     print("="*60)
-    print(f"\n🎯 View experiments at: http://localhost:5000")
+    print(f"\n View experiments at: http://localhost:5000")
 
 if __name__ == "__main__":
     main()

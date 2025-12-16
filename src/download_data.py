@@ -11,7 +11,7 @@ def download_dataset():
     os.makedirs('data/raw', exist_ok=True)
     df.to_csv('data/raw/breast_cancer.csv', index=False)
     
-    print(f"✅ Dataset downloaded: {df.shape}")
+    print(f"Dataset downloaded: {df.shape}")
     print(f"Target distribution:\n{df['target'].value_counts()}")
 
 if __name__ == "__main__":
