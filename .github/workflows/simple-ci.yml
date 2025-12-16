@@ -23,6 +23,7 @@ jobs:
     - name: Run pipeline
       run: |
         python src/download_data.py
+        python src/validate_data.py
         python src/preprocess.py
         echo "✅ Pipeline executed successfully"
     
