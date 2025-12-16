@@ -30,3 +30,14 @@ services:
     depends_on:
       - api
     restart: unless-stopped
+
+  streamlit:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.shap
+    container_name: mlops-streamlit
+    ports:
+      - "8502:8502"
+    depends_on:
+      - api
+    restart: unless-stopped

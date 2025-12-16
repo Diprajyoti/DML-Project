@@ -1,9 +1,5 @@
 # 🏥 Breast Cancer Classification - Complete MLOps Pipeline
 
-![CI Pipeline](https://github.com/Krishmalik786/rajuDI-project/actions/workflows/ci.yml/badge.svg)
-![Python](https://img.shields.io/badge/python-3.11-blue.svg)
-![Docker](https://img.shields.io/badge/docker-ready-brightgreen.svg)
-![License](https://img.shields.io/badge/license-MIT-green.svg)
 
 > **Production-grade MLOps pipeline** for breast cancer classification with experiment tracking, automated deployment, monitoring, and CI/CD integration.
 
@@ -13,7 +9,7 @@
 
 - [Overview](#-overview)
 - [Key Features](#-key-features)
-- [Architecture](#️-architecture)
+- [Architecture](#-architecture)
 - [Technology Stack](#-technology-stack)
 - [Quick Start](#-quick-start)
 - [Detailed Usage](#-detailed-usage)
@@ -22,7 +18,8 @@
 - [API Reference](#-api-reference)
 - [Deployment](#-deployment)
 - [Monitoring](#-monitoring)
-- [CI/CD Pipeline](#️-cicd-pipeline)
+- [SHAP Explainability Analysis](#shap-explainability-analysis)
+- [CI/CD Pipeline](#-cicd-pipeline)
 - [Results & Screenshots](#-results--screenshots)
 - [Future Enhancements](#-future-enhancements)
 - [Contributing](#-contributing)
@@ -90,7 +87,7 @@ A comprehensive MLOps pipeline that includes:
 ┌──────────────────────────────────────────────────────────────┐
 │ DATA PIPELINE │
 │ │
-│ Raw Data (DVC) → Preprocessing → Feature Engineering │
+│ Raw Data (DVC) → Data Validation → Preprocessing → Feature Engineering │
 │ ↓ ↓ ↓ │
 │ Train/Test Split → Scaling → Validation │
 └──────────────────────────────────────────────────────────────┘
@@ -108,6 +105,7 @@ A comprehensive MLOps pipeline that includes:
 │ │
 │ Best Model → FastAPI (REST) ──→ Docker Container │
 │ ↘ Streamlit (UI) ──→ Docker Container │
+| ↘ Shap Analysis (UI) ──→ Docker Container
 └──────────────────────────────────────────────────────────────┘
 ↓
 ┌──────────────────────────────────────────────────────────────┐
@@ -135,6 +133,7 @@ A comprehensive MLOps pipeline that includes:
 | **Containerization** | Docker, docker-compose | Environment isolation |
 | **CI/CD** | GitHub Actions | Automated testing and deployment |
 | **Monitoring** | Evidently | Data drift detection |
+| **Shap analysis** | Shap , Streamlit | interractive feature importance analysis  
 | **Code Quality** | flake8 | Linting and style checks |
 
 ---
@@ -151,8 +150,8 @@ Git
 
 ### Installation
 
-git clone https://github.com/Krishmalik786/rajuDI-project.git
-cd rajuDI-project
+git clone https://github.com/Diprajyoti/DML-project.git
+cd DML-project
 
 2. Create virtual environment
 python -m venv venv
@@ -164,6 +163,9 @@ pip install -r requirements.txt
 
 4. Run the complete pipeline
 python workflows/pipeline.py
+
+5. Run shap dashboard
+streamlit run deployment/shap_dashboard.py
 
 ### output
 
@@ -258,8 +260,16 @@ docker-compose down
 Generate monitoring report
 python src/monitor.py
 
+### 6. Shap Analysis
+Run the interractive dashboard
+
+streamlit run deployment/shap_dashboard.py
+
+Open: http://localhost:8502
+
+
 ## 📁 Project Structure
-rajuDI-project/
+DML-project/
 │
 ├── .github/ # GitHub Actions workflows
 │ └── workflows/
@@ -278,10 +288,12 @@ rajuDI-project/
 │
 ├── deployment/ # Deployment scripts
 │ ├── app.py # FastAPI REST API
+| ├── shap_dashboard.py
 │ └── streamlit_app.py # Streamlit web interface
 │
 ├── docker/ # Docker configurations
 │ ├── Dockerfile # API container
+| ├── Dockerfile.shap # shap container
 │ └── Dockerfile.streamlit # Streamlit container
 │
 ├── models/ # Trained models
@@ -296,6 +308,7 @@ rajuDI-project/
 │
 ├── src/ # Source code
 │ ├── download_data.py # Data acquisition
+| ├── validate_data.py # Data validation
 │ ├── preprocess.py # Data preprocessing
 │ ├── train.py # Model training with MLflow
 │ ├── predict.py # Prediction utilities
@@ -389,7 +402,7 @@ Response:
 
 ## 🏗️ Architecture
 
-Data (DVC) → Preprocessing → Training (MLflow) → Best Model
+Data (DVC) → Validation → Preprocessing → Training (MLflow) → Best Model
 ↓
 FastAPI + Streamlit (Docker)
 ↓
@@ -408,7 +421,7 @@ GitHub Actions runs on every push:
 - ✅ Docker build test
 - ✅ Security scan
 
-**Status:** [View Actions](https://github.com/Krishmalik786/rajuDI-project/actions)
+**Status:** [View Actions]
 
 ---
 
@@ -418,6 +431,13 @@ Automated drift detection with Evidently:
 - Tracks feature distribution changes
 - Detects data quality issues
 - Alerts on target drift
+
+
+## SHAP Explainability Analysis 
+- Implemented a SHAP dashboard to explain model behavior.
+- Shows global feature importance, summary plots, and single prediction explanations.
+- Streamlit UI Dashboard support with interactive statistical analysis.
+
 
 
 
@@ -433,13 +453,13 @@ Automated drift detection with Evidently:
 - [x] Containerization (Docker)
 - [x] CI/CD (GitHub Actions)
 - [x] Monitoring (Evidently)
+- [x] Model explainability (SHAP)
 
 ---
 
 ## 🔮 Future Improvements
 
 - [ ] Hyperparameter tuning (Optuna)
-- [ ] Model explainability (SHAP)
 - [ ] Cloud deployment (AWS/GCP)
 - [ ] API authentication
 - [ ] Real-time monitoring dashboard
@@ -463,8 +483,8 @@ MIT License - see [LICENSE](LICENSE)
 
 ## 👥 Author
 
-**Divyansh Malik**  
-GitHub: [@Krishmalik786](https://github.com/Krishmalik786)
+**Diprajyoti Majumdar**  
+GitHub: [@Diprajyoti](https://github.com/Diprajyoti)
 
 ---
 
@@ -478,4 +498,4 @@ GitHub: [@Krishmalik786](https://github.com/Krishmalik786)
 
 **⭐ If you found this helpful, please star the repo!**
 
-*Last Updated: November 27, 2025*
+*Last Updated: December 16, 2025*

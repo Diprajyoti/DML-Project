@@ -32,3 +32,5 @@ anaconda_projects/
 venv/
 .venv/
 
+mlflow.db
+src/mlflow.db
